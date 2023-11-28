@@ -16,7 +16,8 @@ class GameEnvironment:
 
         # Define the position of the snake's head
         self.snake_head_x = self.width
-        self.snake_head_y = self.height + 80
+        # self.snake_head_y = self.height + 80
+        self.snake_head_y = self.height - 20
         self.direction = "up"
 
         def open_powerline_in_browser():
@@ -37,7 +38,12 @@ class GameEnvironment:
 
     def capture_screen(self):
         with mss.mss() as sct:
-            monitor = {"top": 400, "left": 800, "width": self.width, "height": self.height}
+            monitor = {"top": 550, "left": 900, "width": self.width, "height": self.height}  # for smaller screen
+
+            # monitor = {"top": 400, "left": 800, "width": self.width, "height": self.height} used 300 for height and width
+            # self.snake_head_x = self.width
+            # self.snake_head_y = self.height + 80
+            # this is where id grab less screen
             img = np.array(sct.grab(monitor))
             img = process_image(img)
             return img

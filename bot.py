@@ -5,14 +5,15 @@ import pyautogui
 from game_env import GameEnvironment
 import numpy as np
 
-env = GameEnvironment(height=300, width=300)
+env = GameEnvironment(height=100, width=100)
 env.reset()
 frame_count = 0
 start_time = time.time()
 
-margin = 20
+margin = 30
 
 # its so close to being cold... just have to bug test a few weird features
+# I don't want it to hug the wall forever - add a timer when to turn
 
 
 def scan_left_right(img, y, x, margin):
@@ -96,11 +97,14 @@ while True:
 
         cv2.circle(img, (x, y), 5, (255, 255, 255), 3)
 
+    # cv2.circle(img, (env.snake_head_x, env.snake_head_y), 5, (255, 255, 255), 3)
     # cv2.imshow("Game Screen", img)
     # cv2.waitKey(1)
 
-    # frame_count += 1
-    # fps = frame_count / time_elapsed
-    # print("FPS:", fps)
-    # frame_count = 0
-    # start_time = time.time()
+    frame_count += 1
+    fps = frame_count / time_elapsed
+    print("FPS:", fps)
+    frame_count = 0
+    start_time = time.time()
+
+# see if we can make the image smaller to make it faster
