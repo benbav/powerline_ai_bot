@@ -9,6 +9,7 @@ env = GameEnvironment(height=100, width=100)
 env.reset()
 frame_count = 0
 start_time = time.time()
+move_timer = time.time()
 
 margin = 30
 
@@ -57,7 +58,6 @@ def scan_up_down(img, y, x, margin):
 
 
 while True:
-    # print(env.direction)
     img = env.capture_screen()
     time_elapsed = time.time() - start_time
 
@@ -85,7 +85,7 @@ while True:
     # if there is a wall in front then turn
     direction, y, x = move_mapping[env.direction]
 
-    if img[y, x] == 255:
+    if img[y, x] == 255 or (time.time() - move_timer > 6):
         print("found", env.direction, "wall")
 
         safe_direction = logic_mapping[env.direction]
@@ -94,6 +94,7 @@ while True:
         pyautogui.press(direction_map[safe_direction])
 
         env.direction = safe_direction
+        move_timer = 0
 
         cv2.circle(img, (x, y), 5, (255, 255, 255), 3)
 
@@ -101,10 +102,10 @@ while True:
     # cv2.imshow("Game Screen", img)
     # cv2.waitKey(1)
 
-    frame_count += 1
-    fps = frame_count / time_elapsed
-    print("FPS:", fps)
-    frame_count = 0
-    start_time = time.time()
+    # frame_count += 1
+    # fps = frame_count / time_elapsed
+    # print("FPS:", fps)
+    # frame_count = 0
+    # start_time = time.time()
 
 # see if we can make the image smaller to make it faster
